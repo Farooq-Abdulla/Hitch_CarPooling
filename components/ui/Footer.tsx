@@ -13,7 +13,7 @@ const Footer = () => {
                     <div className="pt-[24px] ">
                         <div className='border-2 border-black bg-white py-[12px] px-[16px] font-semibold text-[16px] w-max flex items-center'>
                             <div className='mr-[24px]'>Download the app</div>
-                            <Image src="/Qr.svg" alt='QR code ' width={100} height={100}></Image>
+                            <Image src="/QR1.png" alt='QR code ' width={100} height={100}></Image>
                         </div>
                     </div>
                 </div>
