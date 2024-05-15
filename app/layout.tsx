@@ -1,4 +1,5 @@
 import NavBar from "@/components/ui/NavBar";
+import RecoilContextProvider from "@/lib/RecoilContextProvider";
 import { Theme } from '@radix-ui/themes';
 import '@radix-ui/themes/styles.css';
 import type { Metadata } from "next";
@@ -19,11 +20,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <script
+          defer
+          src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&libraries=places`}
+        ></script>
+      </head>
       <body className={inter.className}>
-        <Theme>
-          <NavBar />
-          <main>{children}</main>
-        </Theme>
+        <RecoilContextProvider>
+          <Theme>
+            <NavBar />
+            <main>{children}</main>
+          </Theme>
+        </RecoilContextProvider>
       </body>
     </html>
   );

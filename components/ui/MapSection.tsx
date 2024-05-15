@@ -1,6 +1,14 @@
 
-import MapsComponent from "./MapsComponent"
+import MapsComponent from "./MapsComponent";
+const containerStyle = {
+    width: '100%',
+    height: '686px'
+}
 
+const center = {
+    lat: 33.58495881848903,
+    lng: -101.87456245869967
+};
 const MapSection = () => {
     return (
         <section className='pt-[48px] pb-[40px]'>
@@ -12,7 +20,7 @@ const MapSection = () => {
 
             </div>
             <div>
-                <MapsComponent />
+                <MapsComponent className=" h-[686px]" center={center} />
             </div>
         </section>
     )
