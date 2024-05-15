@@ -12,7 +12,7 @@ const NavBar = () => {
                 <NavLink href={"/drive"}>Drive</NavLink>
                 <NavLink href={"/download"}>Download</NavLink>
                 <NavLink href={"/x"}>Help</NavLink>
-                <NavLink href={"/x"}>Book Now</NavLink>
+                <NavLink href={"/book"}>Book Now</NavLink>
 
             </div>
         </div>
