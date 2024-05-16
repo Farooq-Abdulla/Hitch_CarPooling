@@ -65,7 +65,7 @@ export default function PlaceSearchDestination() {
                                 className="my-1 border p-1"
                                 onClick={() => {
                                     handleSelect(main_text)
-                                    console.log(suggestion)
+                                    // console.log(suggestion)
                                 }}
                             >
                                 <p className=" px-3 py-4 rounded-2xl cursor-pointer hover:bg-white">

@@ -1,8 +1,8 @@
-import { DestinationLatAtom, DestinationLngAtom, OriginLatAtom, OriginLngAtom } from "@/lib/RecoilContextProvider";
+import { DestinationLatAtom, DestinationLngAtom, DropOff, OriginLatAtom, OriginLngAtom, PickUp } from "@/lib/RecoilContextProvider";
 import { cn } from "@/lib/utils";
 import { APIProvider, Map, useMap, useMapsLibrary } from "@vis.gl/react-google-maps";
 import { useEffect, useState } from "react";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 
 export function MapCompForBooking({ className, center }: { className: string, center?: { lat: number, lng: number } }) {
     return (
@@ -22,8 +22,10 @@ const Directions = () => {
     const Lng = useRecoilValue(OriginLngAtom);
     const DestLat = useRecoilValue(DestinationLatAtom);
     const DestLng = useRecoilValue(DestinationLngAtom);
-    console.log("Origin Lat and lng: " + Lat, Lng);
-    console.log("Destination Lat and lng: " + DestLat, DestLng);
+    const setPickUp = useSetRecoilState(PickUp);
+    const setDropOff = useSetRecoilState(DropOff);
+    // console.log("Origin Lat and lng: " + Lat, Lng);
+    // console.log("Destination Lat and lng: " + DestLat, DestLng);
 
     const map = useMap();
     const routeLib = useMapsLibrary("routes");
@@ -51,7 +53,13 @@ const Directions = () => {
             setRoutes(responses.routes)
         })
     }, [directionsRender, directionsService, Lat, Lng, DestLat, DestLng])
-    console.log(routes)
+    const originArray = routes[0]?.legs[0].start_address.split(",")
+    const pickup = originArray && originArray[originArray.length - 4] + "," + originArray[originArray.length - 3]
+    const destArray = routes[0]?.legs[0].end_address.split(",")
+    const dropoff = destArray && destArray[destArray.length - 4] + "," + destArray[destArray.length - 3]
+    // console.log(" Routes from MapCompForBooking.tsx: ", pickup, "and " + dropoff)
+    setPickUp(pickup)
+    setDropOff(dropoff)
     return (
         <></>
     )

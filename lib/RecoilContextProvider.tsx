@@ -18,6 +18,48 @@ export const DestinationLngAtom = atom({
     key: 'DestinationLngAtom',
     default: 0,
 })
+export const PickUp = atom({
+    key: 'PickUp',
+    default: '',
+})
+export const DropOff = atom({
+    key: 'DropOff',
+    default: '',
+})
+export const CorouselCurrent = atom({
+    key: 'CorouselCurrent',
+    default: 0,
+})
+export const CorouselCount = atom({
+    key: 'CorouselCount',
+    default: 0,
+})
+
+export const ProductDetails = atom({
+    key: 'ProductDetails',
+    default: {
+        CarName: "",
+        EntireCar: "",
+        STime: "",
+        STimeArrival: "",
+        Price: 0
+    },
+})
+
+export const ProductClick = atom({
+    key: 'ProductClick',
+    default: false,
+})
+
+export const ContentClicked = atom({
+    key: 'ContentClicked',
+    default: true,
+})
+
+export const GoToConf = atom({
+    key: 'GoToConf',
+    default: false,
+})
 
 const RecoilContextProvider = ({ children }: { children: React.ReactNode }) => {
     return (
