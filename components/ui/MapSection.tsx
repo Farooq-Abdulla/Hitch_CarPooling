@@ -20,7 +20,7 @@ const MapSection = () => {
 
             </div>
             <div>
-                <MapsComponent className=" h-[686px]" center={center} />
+                <MapsComponent className=" h-[686px] " center={center} />
             </div>
         </section>
     )
