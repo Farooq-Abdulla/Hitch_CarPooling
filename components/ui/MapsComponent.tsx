@@ -34,7 +34,7 @@ const MapsComponent = ({ className, center }: { className?: string, center?: { l
     return (
         <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!}>
             <div className={cn("mx-8 grayscale z-0 ", className)}>
-                <Map defaultZoom={12} defaultCenter={center} mapId={process.env.NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID} fullscreenControl={false}   >
+                <Map defaultZoom={12} defaultCenter={center} fullscreenControl={false}   >
                     <AdvancedMarker position={center} draggable ></AdvancedMarker>
                 </Map>
             </div>
