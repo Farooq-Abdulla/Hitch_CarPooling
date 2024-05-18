@@ -8,6 +8,7 @@ import {
 import { Calendar } from "@/components/ui/calendar";
 import { Switch } from "@/components/ui/switch";
 import { ContentClicked, CorouselCurrent, DropOff, GoToConf, PickUp, ProductClick, ProductDetails } from "@/lib/RecoilContextProvider";
+import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
@@ -38,6 +39,16 @@ const TravelInfoBlock = () => {
     const Clicked = useRecoilValue(ProductClick)
     const [contentClicked, setContentClicked] = useRecoilState(ContentClicked)
     const conf = useRecoilValue(GoToConf)
+
+    async function handleSubmit() {
+        try {
+            const response = await axios.post("api/checkoutSession");
+            console.log(response.data)
+        } catch (error) {
+            console.log("Error while handling Submit in Travel Info Block", error)
+        }
+
+    }
 
 
 
@@ -272,7 +283,7 @@ const TravelInfoBlock = () => {
                     <span className="font-bold text-[24px] leading-[32px] text-black">${Details.Price}</span>
                     <span className="text-[#6a6a6a] text-[16px] ">total Price</span>
                 </div>
-                <button className="px-[24px] rounded-[10px] py-[16px] bg-black text-white cursor-pointer" onClick={() => router.push("https://buy.stripe.com/14k3fX2KY1w95ocdQQ")}>Go to Confirmation</button>
+                <button className="px-[24px] rounded-[10px] py-[16px] bg-black text-white cursor-pointer" onClick={handleSubmit}>Go to Confirmation</button>
             </div>}
         </div>
     )
