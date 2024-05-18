@@ -3,6 +3,7 @@ import { CorouselCurrent, DateFormatted, DropOff, DropOffFullAddress, FinalPrice
 import axios from "axios";
 import { ArrowRight, Leaf, User } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { FaHandPointRight } from "react-icons/fa6";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { Button } from "./button";
@@ -25,10 +26,14 @@ const ConfirmationBlock = () => {
     const [checked, setChecked] = useRecoilState(SwitchChecked)
     // console.log(checked);
     const [finalPrice, setFinalPrice] = useRecoilState(FinalPrice)
+    // console.log("finalPrice = " + finalPrice)
+
+    useEffect(() => {
+        checked ? setFinalPrice(Details.Price + 2.29 + 0.71) : setFinalPrice(Details.Price + 2.29)
+    }, [checked, setChecked])
 
     async function handleSubmit() {
         try {
-            setFinalPrice(Details.Price + 2.29 + 0.71)
             const response = await axios.post("api/checkoutSession",
                 {
                     Details,
