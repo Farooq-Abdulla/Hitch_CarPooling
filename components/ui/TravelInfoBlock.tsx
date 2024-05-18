@@ -44,6 +44,7 @@ const TravelInfoBlock = () => {
         try {
             const response = await axios.post("api/checkoutSession");
             console.log(response.data)
+            router.push(response.data)
         } catch (error) {
             console.log("Error while handling Submit in Travel Info Block", error)
         }
