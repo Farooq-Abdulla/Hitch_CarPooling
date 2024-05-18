@@ -6,7 +6,13 @@ const stripe= new Stripe(process.env.STRIPE_SECRET_KEY!)
 
 export async function POST(req:NextRequest){
 
-    const {details}= await req.json() 
+    const {Details,
+        finalPrice,
+        pickUp,
+        dropOff,
+        formattedDate,
+        originFullAddress,
+        destFullAddress,}= await req.json() 
 
     // const signature = req.headers.get("Stripe-Signature")
     // if (!signature) {
@@ -29,9 +35,11 @@ export async function POST(req:NextRequest){
                     price_data:{
                         currency: "usd",
                         product_data:{
-                            name: "T-shirt",
+                            name: `Hitch from ${pickUp} to ${dropOff}`,
+                            description: `${originFullAddress} to ${destFullAddress} at ${Details.STime} on ${formattedDate}`,
+
                         },
-                        unit_amount: details.Price * 100,
+                        unit_amount: finalPrice *100,
                     },
                     quantity: 1,
                 }

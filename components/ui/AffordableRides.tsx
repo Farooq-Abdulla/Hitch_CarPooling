@@ -18,7 +18,7 @@ const AffordableRides = () => {
 
                 <div className='flex flex-col gap-y-[16px] '>
                     <div className='bg-[#f5f5f5] rounded-[16px]'>
-                        <RideBlocks STime1="12:44 PM" STimeArrival="3:40 PM Arrival" V1="Hitch Sedan" V1Des="Full size Sedan" EntireCarV1="Entire Car" PassengerV1={3} luggageV1={3} V1Price={100} V2="Hitch XL" V2Des="Five seater SUV" EntireCarV2="Entire Car" PassengerV2={5} luggageV2={5} V2Price={150} />
+                        <RideBlocks STime1="12:44 PM" STimeArrival="3:40 PM Arrival" V1="Hitch Sedan" V1Des="Full size Sedan" EntireCarV1="Entire Car" PassengerV1={3} luggageV1={3} V1Price={1} V2="Hitch XL" V2Des="Five seater SUV" EntireCarV2="Entire Car" PassengerV2={5} luggageV2={5} V2Price={150} />
                     </div>
                     <div className='bg-[#f5f5f5] rounded-[16px]'>
                         <RideBlocks STime1="4:34 PM" STimeArrival="7:30 PM Arrival" V1="Hitch Sedan" V1Des="Full size Sedan" EntireCarV1="Entire Car" PassengerV1={3} luggageV1={3} V1Price={100} V2="Hitch XL" V2Des="Five seater SUV" EntireCarV2="Entire Car" PassengerV2={5} luggageV2={5} V2Price={150} />

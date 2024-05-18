@@ -61,6 +61,29 @@ export const GoToConf = atom({
     default: false,
 })
 
+export const DateFormatted = atom({
+    key: 'DateFormatted',
+    default: '',
+})
+export const PickUpFullAddress = atom({
+    key: 'PickUpFullAddress',
+    default: '',
+})
+export const DropOffFullAddress = atom({
+    key: 'DropOffFullAddress',
+    default: '',
+})
+
+export const SwitchChecked = atom({
+    key: 'SwitchChecked',
+    default: false,
+})
+
+export const FinalPrice = atom({
+    key: 'FinalPrice',
+    default: 0,
+})
+
 const RecoilContextProvider = ({ children }: { children: React.ReactNode }) => {
     return (
         <RecoilRoot>{children}</RecoilRoot>

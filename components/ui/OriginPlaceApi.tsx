@@ -1,7 +1,7 @@
 'use client'
-import { OriginLatAtom, OriginLngAtom } from "@/lib/RecoilContextProvider";
+import { OriginLatAtom, OriginLngAtom, PickUpFullAddress } from "@/lib/RecoilContextProvider";
 import { PiMapPin } from "react-icons/pi";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import usePlacesAutocomplete, {
     getGeocode,
     getLatLng,
@@ -11,6 +11,7 @@ import usePlacesAutocomplete, {
 export default function PlaceSearchOrigin() {
     const [originLat, setOriginLat] = useRecoilState(OriginLatAtom)
     const [originLng, setOriginLng] = useRecoilState(OriginLngAtom)
+    const setOriginFullAddress = useSetRecoilState(PickUpFullAddress)
 
     const { ready, value, suggestions: { status, data }, setValue, clearSuggestions } = usePlacesAutocomplete({ requestOptions: { componentRestrictions: { country: "us" } }, debounce: 300, });
 
@@ -59,6 +60,7 @@ export default function PlaceSearchOrigin() {
                                 className="my-1 border p-1"
                                 onClick={() => {
                                     handleSelect(main_text)
+                                    setOriginFullAddress(suggestion.description)
                                 }}
                             >
                                 <p className=" px-3 py-4 rounded-2xl cursor-pointer hover:bg-white">

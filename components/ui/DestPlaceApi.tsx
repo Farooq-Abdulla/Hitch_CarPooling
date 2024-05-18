@@ -1,7 +1,7 @@
 'use client'
-import { DestinationLatAtom, DestinationLngAtom } from "@/lib/RecoilContextProvider";
+import { DestinationLatAtom, DestinationLngAtom, DropOffFullAddress } from "@/lib/RecoilContextProvider";
 import { GrMapLocation } from "react-icons/gr";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import usePlacesAutocomplete, {
     getGeocode,
     getLatLng,
@@ -11,6 +11,7 @@ import usePlacesAutocomplete, {
 export default function PlaceSearchDestination() {
     const [destLat, setdestLat] = useRecoilState(DestinationLatAtom)
     const [destLng, setdestLng] = useRecoilState(DestinationLngAtom)
+    const setDestFullAddress = useSetRecoilState(DropOffFullAddress)
 
     const {
         ready,
@@ -65,7 +66,7 @@ export default function PlaceSearchDestination() {
                                 className="my-1 border p-1"
                                 onClick={() => {
                                     handleSelect(main_text)
-                                    // console.log(suggestion)
+                                    setDestFullAddress(suggestion.description)
                                 }}
                             >
                                 <p className=" px-3 py-4 rounded-2xl cursor-pointer hover:bg-white">
