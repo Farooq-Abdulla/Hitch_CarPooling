@@ -42,7 +42,11 @@ const TravelInfoBlock = () => {
 
     async function handleSubmit() {
         try {
-            const response = await axios.post("api/checkoutSession");
+            const response = await axios.post("api/checkoutSession",
+                {
+                    details: Details
+                }
+            );
             console.log(response.data)
             router.push(response.data)
         } catch (error) {

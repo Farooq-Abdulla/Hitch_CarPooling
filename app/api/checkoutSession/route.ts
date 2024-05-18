@@ -3,8 +3,10 @@ import { NextRequest, NextResponse } from "next/server"
 import Stripe from "stripe"
 const stripe= new Stripe(process.env.STRIPE_SECRET_KEY!)
 
+
 export async function POST(req:NextRequest){
-    // const body= await req.text()
+
+    const {details}= await req.json() 
 
     // const signature = req.headers.get("Stripe-Signature")
     // if (!signature) {
@@ -29,7 +31,7 @@ export async function POST(req:NextRequest){
                         product_data:{
                             name: "T-shirt",
                         },
-                        unit_amount: 2000,
+                        unit_amount: details.Price * 100,
                     },
                     quantity: 1,
                 }
