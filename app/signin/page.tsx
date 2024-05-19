@@ -5,7 +5,7 @@ import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 import { Otp } from '@/lib/RecoilContextProvider'
 import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth'
 import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 import { useRecoilState } from 'recoil'
@@ -19,26 +19,33 @@ const SignIn = () => {
     const router = useRouter()
     const [loading, setLoading] = useState(false)
 
-    useEffect(() => {
+
+    function onCaptchaVerify() {
         if (!window.recaptchaVerifier) {
             window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
-                'size': 'invisible',
-                'callback': () => {
+                size: 'invisible',
+                callback: () => {
                     sendOtp()
                 }
             });
         }
-    }, []);
+    }
+
 
     const sendOtp = async () => {
         try {
             setLoading(true)
-            const recaptchaVerifier = window.recaptchaVerifier;
-            const confirmation = await signInWithPhoneNumber(auth, phone, recaptchaVerifier)
-            console.log(confirmation)
-            setUser(confirmation)
-            setButtonClick(true)
-            setLoading(false)
+            onCaptchaVerify()
+            const appVerifier = window.recaptchaVerifier;
+            signInWithPhoneNumber(auth, phone, appVerifier)
+                .then((confirmation) => {
+                    setUser(confirmation);
+                    setButtonClick(true)
+                    setLoading(false)
+
+                }).catch((error) => {
+                    console.log("Error while sending OTP: " + error)
+                });
         } catch (error) {
             console.log("Error while sending OTP: " + error)
         }
@@ -48,7 +55,7 @@ const SignIn = () => {
         try {
             setLoading(true)
             const data = await user.confirm(otp)
-            console.log(data)
+            sessionStorage.setItem("user", data.user.uid)
             router.push("/book")
         } catch (error) {
             alert("Try again")
@@ -68,7 +75,7 @@ const SignIn = () => {
                         <div className='w-full'>
                             <PhoneInput country={"us"} value={phone} onChange={(phone) => setPhone("+" + phone)} inputProps={{ autoFocus: true, required: true }} inputStyle={{ width: "100%", height: 50, fontSize: 16 }} containerStyle={{ height: 50 }} />
                         </div>
-                        <div id='recaptcha-container' className='mt-4 ml-16'></div>
+                        {/* <div id='recaptcha-container' className='mt-4 ml-16'></div> */}
                         <Button onClick={sendOtp} className='px-[24px] rounded-[10px] py-[16px] w-full mt-12 text-lg font-medium'>Send verification code {loading ? <LoadingSpinner /> : ''}</Button>
                     </div>
                 )}
