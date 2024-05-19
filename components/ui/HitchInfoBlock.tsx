@@ -11,7 +11,7 @@ const HitchInfoBlock = () => {
                     </div>
                     <div className="mt-[30px]">
                         <div className="w-[200px] h-[55px] bg-white rounded-full flex justify-center items-center cursor-pointer font-bold">
-                            <Link href={"/x"}>Book your ride now</Link>
+                            <Link href={"/book"}>Book your ride now</Link>
                         </div>
 
                     </div>

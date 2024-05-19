@@ -6,7 +6,7 @@ import QuestionsPage from "@/components/ui/QuestionsPage"
 const Drivepage = () => {
     return (
         <div>
-            <div className="bg-black h-[468px] w-full p-[40px] ">
+            <div className="bg-black h-[468px] w-full p-[40px] " id="section2">
                 <div className="flex justify-center items-center  ">
                     <div className="flex flex-col items-center  mt-[56px]">
                         <h1 className="text-[56px] text-white font-bold">Drive with Hitch</h1>

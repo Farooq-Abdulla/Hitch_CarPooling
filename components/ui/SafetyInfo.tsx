@@ -15,7 +15,7 @@ const SafetyInfo = () => {
                     </div>
                     <div className="">
                         <div className="bg-black text-white w-[135px] h-[48px] flex justify-center items-center cursor-pointer ">
-                            <Link href={"/x"}>Book now</Link>
+                            <Link href={"/book"}>Book now</Link>
                         </div>
                     </div>
                 </div>

@@ -1,7 +1,7 @@
 'use client'
-import { OriginLatAtom, OriginLngAtom, PickUpFullAddress } from "@/lib/RecoilContextProvider";
+import { OriginLatAtom, OriginLngAtom, OriginMainText, PickUpFullAddress } from "@/lib/RecoilContextProvider";
 import { PiMapPin } from "react-icons/pi";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import usePlacesAutocomplete, {
     getGeocode,
     getLatLng,
@@ -9,9 +9,10 @@ import usePlacesAutocomplete, {
 
 
 export default function PlaceSearchOrigin() {
-    const [originLat, setOriginLat] = useRecoilState(OriginLatAtom)
-    const [originLng, setOriginLng] = useRecoilState(OriginLngAtom)
+    const setOriginLat = useSetRecoilState(OriginLatAtom)
+    const setOriginLng = useSetRecoilState(OriginLngAtom)
     const setOriginFullAddress = useSetRecoilState(PickUpFullAddress)
+    const originMainText = useRecoilValue(OriginMainText)
 
     const { ready, value, suggestions: { status, data }, setValue, clearSuggestions } = usePlacesAutocomplete({ requestOptions: { componentRestrictions: { country: "us" } }, debounce: 300, });
 
@@ -39,7 +40,7 @@ export default function PlaceSearchOrigin() {
                 <div>
                     <label htmlFor="starting" className='text-[16px] text-[#6A6A6A] text-nowrap'>Starting address</label>
                     <input
-                        value={value}
+                        value={value || originMainText}
                         onChange={handleInput}
                         disabled={!ready}
                         id="starting"

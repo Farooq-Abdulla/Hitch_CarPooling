@@ -1,4 +1,5 @@
 import Image from "next/image"
+import Link from "next/link"
 
 const ServicesSection = () => {
     return (
@@ -37,12 +38,12 @@ const ServicesSection = () => {
                                 </div>
 
                             </div>
-                            <div className="mt-[60px]">
+                            <Link href={"/ride"}><div className="mt-[60px]">
                                 <div className="w-max h-min  cursor-pointer bg-black py-[12px] px-[16px] flex items-center">
-                                    <div><p className="text-white">Ride  </p></div> &nbsp;
+                                    <div><p className="text-white">Ride</p></div> &nbsp;
                                     <span className="text-white size-1/2"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4"><path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" /></svg></span>
                                 </div>
-                            </div>
+                            </div></Link>
                         </div>
                     </div>
                 </div>

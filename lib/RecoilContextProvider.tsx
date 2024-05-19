@@ -83,6 +83,14 @@ export const FinalPrice = atom({
     key: 'FinalPrice',
     default: 0,
 })
+export const OriginMainText = atom({
+    key: 'OriginMainText',
+    default: '',
+})
+export const DestinationMainText = atom({
+    key: 'DestinationMainText',
+    default: '',
+})
 
 const RecoilContextProvider = ({ children }: { children: React.ReactNode }) => {
     return (

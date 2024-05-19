@@ -20,8 +20,8 @@ const Footer = () => {
                 <div className="w-2/12">
                     <h4 className="mb-[16px] text-[20px] font-bold leading-[32px] text-black">About</h4>
                     <div className="mb-[16px] font-normal text-[16px] leading-[24px] text-[#727272] "><Link href={"/x"}>Routes</Link></div>
-                    <div className="mb-[16px] font-normal text-[16px] leading-[24px] text-[#727272] "><Link href={"/x"}>Ride</Link></div>
-                    <div className="mb-[16px] font-normal text-[16px] leading-[24px] text-[#727272] "><Link href={"/x"}>Drive</Link></div>
+                    <div className="mb-[16px] font-normal text-[16px] leading-[24px] text-[#727272] "><Link href={"/ride#section1"}>Ride</Link></div>
+                    <div className="mb-[16px] font-normal text-[16px] leading-[24px] text-[#727272] "><Link href={"/drive#section2"}>Drive</Link></div>
                     <div className="mb-[16px] font-normal text-[16px] leading-[24px] text-[#727272] "><Link href={"/x"}>Partners</Link></div>
                     <div className="mb-[16px] font-normal text-[16px] leading-[24px] text-[#727272] "><Link href={"/x"}>Careers</Link></div>
                 </div>
@@ -46,9 +46,9 @@ const Footer = () => {
                     </div>
                 </div>
                 <div className="flex gap-2">
-                    <div><Link href={'/x'}><FaFacebook /></Link></div>
-                    <div><Link href={'/x'}><FaInstagram /></Link></div>
-                    <div><Link href={'/x'}><FaXTwitter /></Link></div>
+                    <div><Link href={'https://www.facebook.com/ridehitch/'}><FaFacebook /></Link></div>
+                    <div><Link href={'https://www.instagram.com/hitch/'}><FaInstagram /></Link></div>
+                    <div><Link href={'https://twitter.com/hitch'}><FaXTwitter /></Link></div>
                 </div>
             </div>
         </div>

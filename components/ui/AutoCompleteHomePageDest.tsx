@@ -1,18 +1,18 @@
 'use client'
 import { DestinationLatAtom, DestinationLngAtom, DestinationMainText, DropOffFullAddress } from "@/lib/RecoilContextProvider";
 import { GrMapLocation } from "react-icons/gr";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import usePlacesAutocomplete, {
     getGeocode,
     getLatLng,
 } from "use-places-autocomplete";
 
 
-export default function PlaceSearchDestination() {
+const AutoCompleteHomePageDest = () => {
     const setdestLat = useSetRecoilState(DestinationLatAtom)
     const setdestLng = useSetRecoilState(DestinationLngAtom)
     const setDestFullAddress = useSetRecoilState(DropOffFullAddress)
-    const destMainText = useRecoilValue(DestinationMainText)
+    const setDestMainText = useSetRecoilState(DestinationMainText)
 
     const {
         ready,
@@ -22,11 +22,11 @@ export default function PlaceSearchDestination() {
         clearSuggestions,
     } = usePlacesAutocomplete({ requestOptions: { componentRestrictions: { country: "us" } }, debounce: 300 });
 
-    const handleInput = (e: any) => {
+    const handleDestInput = (e: any) => {
         setValue(e.target.value);
     };
 
-    const handleSelect = (description: any) => {
+    const handleDestSelect = (description: any) => {
         setValue(description, false);
         clearSuggestions();
         getGeocode({ address: description }).then((results) => {
@@ -36,24 +36,10 @@ export default function PlaceSearchDestination() {
 
         });
     };
-
     return (
-        <div className='max-w-[402px] w-full bg-gray-200 my-5 rounded-xl cursor-text'>
-            <div className="flex p-3">
-                <div className='flex items-center px-3 '>
-                    <GrMapLocation className='size-7' />
-                </div>
-                <div>
-                    <label htmlFor="destination" className='text-[16px] text-[#6A6A6A] text-nowrap'>Destination address</label>
-                    <input
-                        value={value || destMainText}
-                        onChange={handleInput}
-                        disabled={!ready}
-                        id="destination"
-                        className='bg-gray-200 w-full outline-none cursor-text'
-                    />
-                </div>
-            </div>
+        <div>
+            <div className="text-[14px] font-bold text-[#FFFFFF]">Destination</div>
+            <input type="text" placeholder="Where are you headed?" className="font-medium text-[20px] bg-transparent w-[550px] text-[#FFFFFF] outline-none cursor-text" value={value} onChange={handleDestInput} disabled={!ready} required />
             {status === "OK" && (
                 <ul>
                     {data.map((suggestion) => {
@@ -64,15 +50,16 @@ export default function PlaceSearchDestination() {
                         return (
                             <li
                                 key={place_id}
-                                className="my-1 border p-1"
+                                className="border-t border-[#404040] w-[600px] -ml-4 relative z-10"
                                 onClick={() => {
-                                    handleSelect(main_text)
+                                    handleDestSelect(main_text)
+                                    setDestMainText(main_text)
                                     setDestFullAddress(suggestion.description)
                                 }}
                             >
-                                <p className=" px-3 py-4 rounded-2xl cursor-pointer hover:bg-white">
-                                    <div className="flex items-center"><GrMapLocation className='size-5 mx-2' /> {main_text}</div>
-                                    <span className=" ml-10 text-sm">{secondary_text}</span>
+                                <p className="  h-[80px] cursor-pointer bg-[#404040]  text-[#FFFFFF] pt-2  hover:bg-black">
+                                    <div className="flex items-center text-[20px]  "><GrMapLocation className='size-5 mx-2' /> {main_text}</div>
+                                    <span className=" ml-10 text-sm ">{secondary_text}</span>
                                 </p>
                             </li>
                         );
@@ -80,5 +67,7 @@ export default function PlaceSearchDestination() {
                 </ul>
             )}
         </div>
-    );
-};
+    )
+}
+
+export default AutoCompleteHomePageDest
