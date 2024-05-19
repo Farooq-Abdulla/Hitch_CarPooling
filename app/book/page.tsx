@@ -1,5 +1,6 @@
 'use client'
 import PlaceSearchDestination from '@/components/ui/DestPlaceApi';
+import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 import { MapCompForBooking } from '@/components/ui/MapCompForBooking';
 import PlaceSearchOrigin from '@/components/ui/OriginPlaceApi';
 import TravelInfoBlock from '@/components/ui/TravelInfoBlock';
@@ -12,8 +13,10 @@ const containerStyle = {
 
 const Bookpage = () => {
     const [showTravelInfo, setShowTravelInfo] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const handleStartSearch = () => {
+        setLoading(true);
         setShowTravelInfo(true);
     };
 
@@ -28,7 +31,7 @@ const Bookpage = () => {
                             className='bg-black text-white px-[24px] w-full rounded-lg py-[16px] cursor-pointer'
                             onClick={handleStartSearch}
                         >
-                            Start Your Search
+                            Start Your Search {loading ? <LoadingSpinner /> : ''}
                         </button>
                     </div>
                 )}

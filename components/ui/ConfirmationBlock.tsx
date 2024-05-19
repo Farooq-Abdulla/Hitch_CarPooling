@@ -3,10 +3,11 @@ import { CorouselCurrent, DateFormatted, DropOff, DropOffFullAddress, FinalPrice
 import axios from "axios";
 import { ArrowRight, Leaf, User } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { FaHandPointRight } from "react-icons/fa6";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { Button } from "./button";
+import { LoadingSpinner } from "./LoadingSpinner";
 import { Switch } from "./switch";
 
 const ConfirmationBlock = () => {
@@ -27,6 +28,7 @@ const ConfirmationBlock = () => {
     // console.log(checked);
     const [finalPrice, setFinalPrice] = useRecoilState(FinalPrice)
     // console.log("finalPrice = " + finalPrice)
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         checked ? setFinalPrice(Details.Price + 2.29 + 0.71) : setFinalPrice(Details.Price + 2.29)
@@ -34,6 +36,7 @@ const ConfirmationBlock = () => {
 
     async function handleSubmit() {
         try {
+            setLoading(true)
             const response = await axios.post("api/checkoutSession",
                 {
                     Details,
@@ -140,7 +143,7 @@ const ConfirmationBlock = () => {
                     </div>
                 </div>
                 <div className="bg-white p-[24px] w-full h-[150px] flex justify-between items-center border-t z-20 sticky bottom-1 ">
-                    <Button className="w-[400px] rounded-lg" onClick={handleSubmit}>Book this trip</Button>
+                    <Button className="w-[400px] rounded-lg" onClick={handleSubmit}>Book this trip {loading ? <LoadingSpinner /> : ''}</Button>
                 </div>
             </div>
 

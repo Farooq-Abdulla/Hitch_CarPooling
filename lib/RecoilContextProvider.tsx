@@ -91,6 +91,10 @@ export const DestinationMainText = atom({
     key: 'DestinationMainText',
     default: '',
 })
+export const Otp = atom({
+    key: 'otp',
+    default: '',
+})
 
 const RecoilContextProvider = ({ children }: { children: React.ReactNode }) => {
     return (
