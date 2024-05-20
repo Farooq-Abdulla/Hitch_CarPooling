@@ -3,13 +3,13 @@ import { auth } from "@/app/firebase/config"
 import { signOut } from "firebase/auth"
 import Image from "next/image"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
 import { useAuthState } from "react-firebase-hooks/auth"
 import NavLink from "./NavLinks"
 
 
 const NavBar = () => {
-    const router = useRouter()
+
+    // console.log(IsUser)
     const [authUser] = useAuthState(auth)
     return (
         <div className='sticky top-0 h-[56px] bg-black text-white px-[40px] flex items-center justify-between  z-10 ' >
@@ -20,7 +20,10 @@ const NavBar = () => {
                 <NavLink href={"/download"}>Download</NavLink>
                 <NavLink href={"/x"}>Help</NavLink>
                 <NavLink href={"/book"}>Book Now</NavLink>
-                {authUser && <span onClick={() => signOut(auth)}><NavLink href={"/"}>SignOut</NavLink></span>}
+                {authUser ? <span className="cursor-pointer px-[8px] py-[10px] my-[4px] mx-3 hover:bg-gray-600 hover:rounded-md" onClick={() => signOut(auth)}>SignOut</span> : null}
+                {/* <ServerNavBarSignOut /> */}
+                {/* <AuthUser>SignOut</AuthUser> */}
+                {/* <span className='px-[8px] py-[10px] my-[4px] mx-3 hover:bg-gray-600 hover:rounded-md cursor-pointer' >SignOut</span> */}
             </div>
         </div>
     )

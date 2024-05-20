@@ -30,7 +30,7 @@ export function CarouselDemo() {
         api.on("select", () => {
             setCurrent(api.selectedScrollSnap() + 1)
         })
-    }, [api])
+    }, [api, setCurrent, setCount])
 
     return (
         <Carousel setApi={setApi} className="w-full max-w-16">

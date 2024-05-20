@@ -1,11 +1,13 @@
 import ComparisonComp from "@/components/ui/ComparisonComp"
 import DriveInfoTabComp from "@/components/ui/DriveInfoTabComp"
 import Footer from "@/components/ui/Footer"
+import NavBar from "@/components/ui/NavBar"
 import QuestionsPage from "@/components/ui/QuestionsPage"
 
 const Drivepage = () => {
     return (
         <div>
+            <NavBar />
             <div className="bg-black h-[468px] w-full p-[40px] " id="section2">
                 <div className="flex justify-center items-center  ">
                     <div className="flex flex-col items-center  mt-[56px]">

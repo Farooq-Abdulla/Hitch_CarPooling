@@ -1,9 +1,11 @@
 import Footer from "@/components/ui/Footer"
+import NavBar from "@/components/ui/NavBar"
 import Image from "next/image"
 
 const Downloadpage = () => {
     return (
         <div>
+            <NavBar />
             <div className=" h-[468px] w-full p-[40px] ">
                 <div className="flex justify-center items-center  ">
                     <div className="flex flex-col items-center  mt-[56px]">

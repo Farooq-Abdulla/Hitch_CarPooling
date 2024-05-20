@@ -13,11 +13,11 @@ const SafetyInfo = () => {
                             <p className="leading-[32px] mt-[8px] text-[20px] font-medium text-[#121212]">Our drivers are carefully screened through industry standard background checks, identity verification, and document validation to ensure your safety on every ride.</p>
                         </div>
                     </div>
-                    <div className="">
+                    <Link href={"/book"}><div className="">
                         <div className="bg-black text-white w-[135px] h-[48px] flex justify-center items-center cursor-pointer ">
-                            <Link href={"/book"}>Book now</Link>
+                            Book now
                         </div>
-                    </div>
+                    </div></Link>
                 </div>
                 <div>
                     <Image src="/safetyImage.webp" alt="Safety Image" width={600} height={600}></Image>

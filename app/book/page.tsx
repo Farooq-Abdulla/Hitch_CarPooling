@@ -2,19 +2,17 @@
 import PlaceSearchDestination from '@/components/ui/DestPlaceApi';
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 import { MapCompForBooking } from '@/components/ui/MapCompForBooking';
+import NavBar from '@/components/ui/NavBar';
 import PlaceSearchOrigin from '@/components/ui/OriginPlaceApi';
 import TravelInfoBlock from '@/components/ui/TravelInfoBlock';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../firebase/config';
 
-const containerStyle = {
-    width: '100%',
-    height: '95vh'
-};
 
 const Bookpage = () => {
+
 
     const [authUser] = useAuthState(auth)
     const router = useRouter()
@@ -30,14 +28,18 @@ const Bookpage = () => {
     //     return
     // }
 
-    if (!authUser) {
-        router.push("/signin")
-        return
-    }
+    useEffect(() => {
+        if (!authUser) {
+            router.push("/signin");
+        }
+    }, [authUser, router]);
+
 
     return (
         <div>
+            <NavBar />
             <div className='relative'>
+
                 {!showTravelInfo && (
                     <div className='max-w-[450px] w-full p-[16px] z-10 mx-6 max-h-full bg-[#ffffffcc] absolute bottom-6'>
                         <PlaceSearchOrigin />

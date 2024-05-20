@@ -1,4 +1,3 @@
-import NavBar from "@/components/ui/NavBar";
 import RecoilContextProvider from "@/lib/RecoilContextProvider";
 import { Theme } from '@radix-ui/themes';
 import '@radix-ui/themes/styles.css';
@@ -19,18 +18,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" >
       <head>
         <script
           defer
           src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&libraries=places`}
         ></script>
       </head>
-      <body className={inter.className}>
-        <RecoilContextProvider>
+      <body className={inter.className} >
+        <RecoilContextProvider >
           <Theme>
-            <NavBar />
-            <main>{children}</main>
+
+            <main>
+              {children}
+            </main>
           </Theme>
         </RecoilContextProvider>
       </body>

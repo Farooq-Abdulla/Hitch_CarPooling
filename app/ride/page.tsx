@@ -1,4 +1,5 @@
 import Footer from "@/components/ui/Footer"
+import NavBar from "@/components/ui/NavBar"
 import QuestionsPage from "@/components/ui/QuestionsPage"
 import RideRatesInfo from "@/components/ui/RideRatesInfo"
 import Link from "next/link"
@@ -6,6 +7,7 @@ import Link from "next/link"
 const Ridepage = () => {
     return (
         <div>
+            <NavBar />
             <div className="bg-black h-[468px] w-full p-[40px] " id="section1">
                 <div className="flex justify-center items-center  ">
                     <div className="flex flex-col items-center  mt-[56px]">

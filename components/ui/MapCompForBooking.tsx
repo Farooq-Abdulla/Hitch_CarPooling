@@ -8,7 +8,7 @@ export function MapCompForBooking({ className, center }: { className: string, ce
     return (
         <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!} >
             <div className={cn("rayscale-0 mx-0 w-full h-[95vh] ", className)}>
-                <Map defaultZoom={12} defaultCenter={center} mapId={process.env.NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID} fullscreenControl={false}   >
+                <Map defaultZoom={12} defaultCenter={center} mapId={process.env.NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID!} fullscreenControl={false}   >
                     {/* <AdvancedMarker position={center} draggable ></AdvancedMarker> */}
                     <Directions />
                 </Map>

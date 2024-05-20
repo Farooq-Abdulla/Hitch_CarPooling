@@ -32,7 +32,7 @@ const ConfirmationBlock = () => {
 
     useEffect(() => {
         checked ? setFinalPrice(Details.Price + 2.29 + 0.71) : setFinalPrice(Details.Price + 2.29)
-    }, [checked, setChecked])
+    }, [checked, setChecked, setFinalPrice, Details.Price])
 
     async function handleSubmit() {
         try {
