@@ -4,7 +4,10 @@ import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 import { MapCompForBooking } from '@/components/ui/MapCompForBooking';
 import PlaceSearchOrigin from '@/components/ui/OriginPlaceApi';
 import TravelInfoBlock from '@/components/ui/TravelInfoBlock';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../firebase/config';
 
 const containerStyle = {
     width: '100%',
@@ -12,6 +15,9 @@ const containerStyle = {
 };
 
 const Bookpage = () => {
+
+    const [authUser] = useAuthState(auth)
+    const router = useRouter()
     const [showTravelInfo, setShowTravelInfo] = useState(false);
     const [loading, setLoading] = useState(false);
 
@@ -19,6 +25,15 @@ const Bookpage = () => {
         setLoading(true);
         setShowTravelInfo(true);
     };
+    // if (!sessionStorage.getItem("user")) {
+    //     router.push("/signin")
+    //     return
+    // }
+
+    if (!authUser) {
+        router.push("/signin")
+        return
+    }
 
     return (
         <div>

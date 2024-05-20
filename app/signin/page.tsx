@@ -5,13 +5,17 @@ import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 import { Otp } from '@/lib/RecoilContextProvider'
 import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useAuthState } from 'react-firebase-hooks/auth'
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 import { useRecoilState } from 'recoil'
 import { auth } from '../firebase/config'
 
 const SignIn = () => {
+    const [authUser] = useAuthState(auth)
+    // console.log(authUser)
+
     const [phone, setPhone] = useState('')
     const [user, setUser] = useState<any>()
     const [buttonClick, setButtonClick] = useState(false)
@@ -20,22 +24,43 @@ const SignIn = () => {
     const [loading, setLoading] = useState(false)
 
 
-    function onCaptchaVerify() {
+    useEffect(() => {
+        // Cleanup function to reset the reCAPTCHA verifier
+        return () => {
+            if (window.recaptchaVerifier) {
+                window.recaptchaVerifier.clear();
+                window.recaptchaVerifier = null;
+            }
+        };
+    }, []);
+
+    const initializeRecaptcha = () => {
         if (!window.recaptchaVerifier) {
             window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
                 size: 'invisible',
-                callback: () => {
-                    sendOtp()
+                callback: (response: any) => {
+                    sendOtp();
+                },
+                'expired-callback': () => {
+                    // Reset reCAPTCHA if it expires
+                    window.recaptchaVerifier.render().then((widgetId: any) => {
+                        window.grecaptcha.reset(widgetId);
+                    });
                 }
             });
+        } else {
+            // Reset if recaptchaVerifier already exists
+            window.recaptchaVerifier.render().then((widgetId: any) => {
+                window.grecaptcha.reset(widgetId);
+            });
         }
-    }
+    };
 
 
     const sendOtp = async () => {
         try {
             setLoading(true)
-            onCaptchaVerify()
+            initializeRecaptcha()
             const appVerifier = window.recaptchaVerifier;
             signInWithPhoneNumber(auth, phone, appVerifier)
                 .then((confirmation) => {
@@ -47,7 +72,7 @@ const SignIn = () => {
                     console.log("Error while sending OTP: " + error)
                 });
         } catch (error) {
-            console.log("Error while sending OTP: " + error)
+            console.log("Error while sending OTP try block: " + error)
         }
     }
 
@@ -55,7 +80,8 @@ const SignIn = () => {
         try {
             setLoading(true)
             const data = await user.confirm(otp)
-            sessionStorage.setItem("user", data.user.uid)
+            setOTP('')
+            // sessionStorage.setItem("user", data.user.uid)
             router.push("/book")
         } catch (error) {
             alert("Try again")
@@ -65,9 +91,12 @@ const SignIn = () => {
         }
     }
 
+
+
     return (
         <div className='absolute top-[50%] -translate-y-2/4 left-0 w-full max-h-full p-3'>
             <div className='bg-white mx-auto w-full max-w-[502px]'>
+                {/* <Button onClick={() => signOut(auth)}>SignOut</Button> */}
                 {!buttonClick && (
                     <div>
                         <p className='text-[32px] leading-[40px] font-bold mb-2'>What's your number?</p>
