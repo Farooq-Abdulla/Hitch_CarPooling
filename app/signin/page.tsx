@@ -99,8 +99,8 @@ const SignIn = () => {
                 {/* <Button onClick={() => signOut(auth)}>SignOut</Button> */}
                 {!buttonClick && (
                     <div>
-                        <p className='text-[32px] leading-[40px] font-bold mb-2'>What's your number?</p>
-                        <p className='text-[20px] leading-[28px] text-[#6a6a6a] mb-8'>Whether you're creating an account or signing back in, let's start with your number</p>
+                        <p className='text-[32px] leading-[40px] font-bold mb-2'>What&apos;s your number?</p>
+                        <p className='text-[20px] leading-[28px] text-[#6a6a6a] mb-8'>Whether you&apos;re creating an account or signing back in, let&apos;s start with your number</p>
                         <div className='w-full'>
                             <PhoneInput country={"us"} value={phone} onChange={(phone) => setPhone("+" + phone)} inputProps={{ autoFocus: true, required: true }} inputStyle={{ width: "100%", height: 50, fontSize: 16 }} containerStyle={{ height: 50 }} />
                         </div>
