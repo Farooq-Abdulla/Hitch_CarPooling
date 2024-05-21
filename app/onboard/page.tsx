@@ -1,64 +1,132 @@
+'use client'
+import { Button } from '@/components/ui/button';
+import { Input } from "@/components/ui/input";
+import NavBar from '@/components/ui/NavBar';
+import cityOptions from '@/components/ui/SelectCity';
+import Seen from '@/components/ui/SelectHear';
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
-import NavBar from '@/components/ui/NavBar'
-import SelectCity from '@/components/ui/SelectCity'
+// Extract city names and seen where options as tuples
+const cityNames = cityOptions.map((city) => city.name);
+const cityNamesTuple = cityNames as [string, ...string[]];
+const seenWhere = Seen.map((seen) => seen.name);
+const seenWhereTuple = seenWhere as [string, ...string[]];
+
+// Create schema with enum validation for city and seenWhere
+const schema = z.object({
+    firstname: z.string().max(25),
+    lastname: z.string().max(25),
+    email: z.string().email({ message: "Invalid email address" }),
+    phone: z.string().min(10, { message: "Invalid phone number" }).max(10, { message: "Invalid phone number" }),
+    city: z.enum(cityNamesTuple),
+    seenWhere: z.enum(seenWhereTuple)
+});
+type FormFields = z.infer<typeof schema>;
+
+// Sort cityOptions alphabetically by name
+cityOptions.sort((a, b) => {
+    if (a.name < b.name) {
+        return -1;
+    }
+    if (a.name > b.name) {
+        return 1;
+    }
+    return 0;
+});
 
 const Onboarding = () => {
-    // const countries = Country.getAllCountries()
-    // console.log(countries)
+    const { register, handleSubmit, setError, formState: { errors, isSubmitting } } = useForm();
+
+    const onSubmit = (data: any) => {
+        console.log(data);
+    }
 
     return (
-        <div>
+        <div className='absolute w-full'>
             <NavBar />
-            <div className='absolute top-[50%] -translate-y-2/4 left-0 w-full max-h-full overflow-auto p-[16px] pb-[48px]'>
-                <div className='bg-white mx-auto w-full max-w-[502px]'>
-                    <div className='pt-4'>
-                        <p className='text-4xl font-bold mb-2'>Create your account</p>
-                        <p className='mb-4 text-xl text-[#6a6a6a]'>Make sure that your personal information is correct and add some additional info to create your account.</p>
-                        <div className='flex flex-col gap-y-2'>
-                            <div className='relative flex items-center h-[64px] cursor-text w-full border rounded-xl mb-2'>
-                                <div className='flex-1 relative h-full'>
-                                    <label htmlFor="firstname" className='absolute top-[50%] left-[16px] text-[16px] text-[#6a6a6a] transition-all translate-y-[-50%]'>First name</label>
-                                    <input type="text" id='firstname' className='w-full h-full bg-none outline-none px-[16px] py-[12px] ' />
+            <form onSubmit={handleSubmit(onSubmit)} >
+                <div className='relative top-10 left-0 w-full h-full overflow-y-auto p-[16px] pb-[48px]'>
+                    <div className='bg-white mx-auto w-full max-w-[502px]'>
+                        <div className='pt-4'>
+                            <div className='text-4xl font-bold mb-2'>Create your account</div>
+                            <div className='mb-4 text-xl text-[#6a6a6a]'>Make sure that your personal information is correct and add some additional info to create your account.</div>
+                            <div className='flex flex-col gap-y-2'>
+                                <div className='relative flex items-center h-full cursor-text w-full  rounded-xl mb-2'>
+                                    <div className='flex-1 relative h-full'>
+                                        <Input required type='text' placeholder="First Name" className='w-full h-[50px] text-base rounded-xl' {...register("firstname")} />
+                                    </div>
                                 </div>
-                            </div>
-                            <div className='relative flex items-center h-[64px] cursor-text w-full border rounded-xl mb-2'>
-                                <div className='flex-1 relative h-full'>
-                                    <label htmlFor="Lastname" className='absolute top-[50%] left-[16px] text-[16px] text-[#6a6a6a] transition-all translate-y-[-50%]'>Last name</label>
-                                    <input type="text" id='Lastname' className='w-full h-full bg-none outline-none px-[16px] py-[12px]' />
+                                <div className='relative flex items-center h-full cursor-text w-full  rounded-xl mb-2'>
+                                    <div className='flex-1 relative h-full'>
+                                        <Input required type='text' placeholder="Last Name" className='w-full h-[50px] text-base rounded-xl' {...register("lastname")} />
+                                    </div>
                                 </div>
-                            </div>
-                            <div className='relative flex items-center h-[64px] cursor-text w-full border rounded-xl mb-2'>
-                                <div className='flex-1 relative h-full'>
-                                    <label htmlFor="Email" className='absolute top-[50%] left-[16px] text-[16px] text-[#6a6a6a] transition-all translate-y-[-50%]'>Email</label>
-                                    <input type="text" id='Email' className='w-full h-full bg-none outline-none px-[16px] py-[12px]' />
+                                <div className='relative flex items-center h-full cursor-text w-full  rounded-xl mb-2'>
+                                    <div className='flex-1 relative h-full'>
+                                        <Input required type='email' placeholder="Email" className='w-full h-[50px] text-base rounded-xl' {...register("email")} />
+                                    </div>
                                 </div>
-                            </div>
-                            <div className='relative flex items-center h-[64px] cursor-text w-full border rounded-xl mb-2'>
-                                <div className='flex-1 relative h-full'>
-                                    <label htmlFor="Phone" className='absolute top-[50%] left-[16px] text-[16px] text-[#6a6a6a] transition-all translate-y-[-50%] bg-'></label>
-                                    <input type="text" id='Phone' className='w-full h-full bg-none outline-none px-[16px] py-[12px]' disabled value={"+18062836268"} />
+                                <div className='relative flex items-center h-full cursor-text w-full  rounded-xl mb-2'>
+                                    <div className='flex-1 relative h-full'>
+                                        <Input required type='tel' placeholder="Phone" className='w-full h-[50px] text-base rounded-xl' disabled defaultValue='+18061234567' {...register("phone")} />
+                                    </div>
                                 </div>
-                            </div>
-                            <div className='relative flex items-center h-[64px] cursor-text w-full border rounded-xl mb-2'>
-                                <div className='flex-1 relative h-full'>
-                                    <label htmlFor="HomeCity" className='absolute top-[50%] left-[16px] text-[16px] text-[#6a6a6a] transition-all translate-y-[-50%]'></label>
-                                    {/* <input type="text" id='HomeCity' className='w-full h-full bg-none outline-none px-[16px] py-[12px]' /> */}
-                                    <SelectCity />
+                                <div className=' flex items-center max-h-full cursor-text w-full  rounded-xl mb-2'>
+                                    <div className='flex-1 relative h-full'>
+                                        {/* <Select {...register("city")}>
+                                            <SelectTrigger className="h-[50px] text-base text-[#6a6a6a] rounded-xl">
+                                                <SelectValue placeholder="HomeCity" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                {cityOptions.map((city) => {
+                                                    return (<SelectItem className='cursor-pointer' value={city.value} key={city.key}>{city.name}</SelectItem>)
+                                                })}
+                                            </SelectContent>
+                                        </Select> */}
+                                        <div className='border border-slate-200 px-4 rounded-xl h-[60px] py-2 text-[#6a6a6a]'>
+                                            <label htmlFor="city" className='text-sm'>Home City</label>
+                                            <select className='w-full  text-base text-[#6a6a6a]  mb-2  px-3 outline-none' id='city' {...register("city")} required>
+                                                <option selected>Austin</option>
+                                                {cityOptions.map((city) => {
+                                                    return (<option value={city.value} key={city.key}>{city.name}</option>)
+                                                })}
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className='relative flex items-center h-[64px] cursor-text w-full border rounded-xl mb-2'>
-                                <div className='flex-1 relative h-full'>
-                                    <label htmlFor="firstname" className='absolute top-[50%] left-[16px] text-[16px] text-[#6a6a6a] transition-all translate-y-[-50%]'>First name</label>
-                                    <input type="text" id='firstname' className='w-full h-full bg-none outline-none px-[16px] py-[12px]' />
+                                <div className='relative flex items-center max-h-full text-base text-[#6a6a6a] cursor-text w-full  rounded-xl mb-2'>
+                                    <div className='flex-1 relative h-full'>
+                                        {/* <Select {...register("seenWhere")}>
+                                            <SelectTrigger className="h-[50px] text-base text-[#6a6a6a] rounded-xl">
+                                                <SelectValue placeholder="How did you hear about us ?" className='' />
+                                            </SelectTrigger>
+                                            <SelectContent className='cursor-pointer'>
+                                                {Seen.map((item) => {
+                                                    return (<SelectItem className='cursor-pointer' value={item.value} key={item.key}>{item.name}</SelectItem>)
+                                                })}
+                                            </SelectContent>
+                                        </Select> */}
+                                        <div className='border border-slate-200 px-4 rounded-xl h-[60px] py-2 text-[#6a6a6a]'>
+                                            <label htmlFor="seen" className='text-sm'> Where did you hear about us ?</label>
+                                            <select className='w-full  text-base text-[#6a6a6a]  mb-2  px-3 outline-none' id='seen' {...register("seenWhere")} required>
+
+                                                {Seen.map((item) => {
+                                                    return (<option value={item.value} key={item.key}>{item.name}</option>)
+                                                })}
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
+                                <Button className=' px-[24px] rounded-[10px] py-[16px] w-full text-center text-lg font-medium mt-4' disabled={isSubmitting}>{isSubmitting ? "Loading..." : "Create your account"}</Button>
+                                {errors.root && (<div className='text-red-700'>errors.root.message</div>)}
                             </div>
                         </div>
                     </div>
                 </div>
-
-            </div>
+            </form>
         </div>
     )
 }
 
-export default Onboarding
+export default Onboarding;

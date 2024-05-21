@@ -1,4 +1,5 @@
 import RecoilContextProvider from "@/lib/RecoilContextProvider";
+import { NextUIProvider } from "@nextui-org/react";
 import { Theme } from '@radix-ui/themes';
 import '@radix-ui/themes/styles.css';
 import type { Metadata } from "next";
@@ -27,12 +28,14 @@ export default function RootLayout({
       </head>
       <body className={inter.className} >
         <RecoilContextProvider >
-          <Theme>
+          <NextUIProvider>
+            <Theme>
 
-            <main>
-              {children}
-            </main>
-          </Theme>
+              <main>
+                {children}
+              </main>
+            </Theme>
+          </NextUIProvider>
         </RecoilContextProvider>
       </body>
     </html>
