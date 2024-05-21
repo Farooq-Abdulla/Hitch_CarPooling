@@ -4,7 +4,7 @@ import { InputOTPDemo } from '@/components/ui/InputOTP'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 import NavBar from '@/components/ui/NavBar'
 import { Otp } from '@/lib/RecoilContextProvider'
-import { RecaptchaVerifier, signInWithPhoneNumber, signOut } from 'firebase/auth'
+import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
@@ -90,6 +90,10 @@ const SignIn = () => {
         try {
             setLoading(true)
             const data = await user.confirm(otp)
+            console.log(data.user.metadata.createdAt, data.user.metadata.lastLoginAt)
+            if (data.user.metadata.createdAt === data.user.metadata.lastLoginAt) {
+                router.push("/onboard")
+            }
             setOTP('')
 
             // sessionStorage.setItem("user", data.user.uid)
@@ -109,7 +113,7 @@ const SignIn = () => {
             <NavBar />
             <div className='absolute top-[50%] -translate-y-2/4 left-0 w-full max-h-full p-3'>
                 <div className='bg-white mx-auto w-full max-w-[502px]'>
-                    <Button onClick={() => signOut(auth)}>SignOut</Button>
+                    {/* <Button onClick={() => signOut(auth)}>SignOut</Button> */}
                     {!buttonClick && (
                         <div>
                             <p className='text-[32px] leading-[40px] font-bold mb-2'>What&apos;s your number?</p>
