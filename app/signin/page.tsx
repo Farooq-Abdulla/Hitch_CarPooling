@@ -91,9 +91,9 @@ const SignIn = () => {
             setLoading(true)
             const data = await user.confirm(otp)
             console.log(data.user.metadata.createdAt, data.user.metadata.lastLoginAt)
-            if (data.user.metadata.createdAt === data.user.metadata.lastLoginAt) {
-                router.push("/onboard")
-            }
+            // if (data.user.metadata.createdAt === data.user.metadata.lastLoginAt) {
+            //     router.push("/onboard")
+            // }
             setOTP('')
 
             // sessionStorage.setItem("user", data.user.uid)
