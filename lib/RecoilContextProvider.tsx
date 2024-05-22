@@ -96,6 +96,11 @@ export const Otp = atom({
     default: '',
 })
 
+export const phoneState = atom({
+    key: 'phoneState',
+    default: '',
+})
+
 
 
 const RecoilContextProvider = ({ children }: { children: React.ReactNode }) => {

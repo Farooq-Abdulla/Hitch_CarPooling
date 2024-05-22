@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button'
 import { InputOTPDemo } from '@/components/ui/InputOTP'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 import NavBar from '@/components/ui/NavBar'
-import { Otp } from '@/lib/RecoilContextProvider'
+import { Otp, phoneState } from '@/lib/RecoilContextProvider'
 import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -25,9 +25,10 @@ const SignIn = () => {
     const [authUser] = useAuthState(auth)
     // console.log(authUser)
 
-
-    const [phone, setPhone] = useState('')
+    const [phone, setPhone] = useRecoilState(phoneState)
+    // const [phone, setPhone] = useState('')
     const [user, setUser] = useState<any>()
+
     const [buttonClick, setButtonClick] = useState(false)
     const [otp, setOTP] = useRecoilState(Otp)
     const router = useRouter()
@@ -90,14 +91,20 @@ const SignIn = () => {
         try {
             setLoading(true)
             const data = await user.confirm(otp)
-            console.log(data.user.metadata.createdAt, data.user.metadata.lastLoginAt)
-            // if (data.user.metadata.createdAt === data.user.metadata.lastLoginAt) {
-            //     router.push("/onboard")
-            // }
+            console.log(data)
+            // console.log(data.user.metadata.createdAt, data.user.metadata.lastLoginAt)
+            console.log(data._tokenResponse.isNewUser)
             setOTP('')
+            if (data._tokenResponse.isNewUser) {
+                console.log(" In if block")
+                router.push("/onboard")
+            } else {
+                router.push("/book")
+
+            }
+
 
             // sessionStorage.setItem("user", data.user.uid)
-            router.push("/book")
         } catch (error) {
             alert("Try again")
             setOTP('')

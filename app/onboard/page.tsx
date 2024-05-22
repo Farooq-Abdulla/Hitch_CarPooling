@@ -4,8 +4,14 @@ import { Input } from "@/components/ui/input";
 import NavBar from '@/components/ui/NavBar';
 import cityOptions from '@/components/ui/SelectCity';
 import Seen from '@/components/ui/SelectHear';
+import { phoneState } from '@/lib/RecoilContextProvider';
+import { addDoc, collection } from "firebase/firestore";
+import { useRouter } from 'next/navigation';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { useForm } from "react-hook-form";
+import { useRecoilValue } from 'recoil';
 import { z } from "zod";
+import { auth, db } from '../firebase/config';
 
 // Extract city names and seen where options as tuples
 const cityNames = cityOptions.map((city) => city.name);
@@ -36,10 +42,35 @@ cityOptions.sort((a, b) => {
 });
 
 const Onboarding = () => {
-    const { register, handleSubmit, setError, formState: { errors, isSubmitting } } = useForm();
+    const router = useRouter()
+    const [authUser] = useAuthState(auth)
+    if (!authUser) {
+        router.push("/signin")
+    }
+    const defaultPhone = useRecoilValue(phoneState);
+    const { register, handleSubmit, setError, formState: { errors, isSubmitting } } = useForm<FormFields>({ defaultValues: { phone: defaultPhone } });
 
-    const onSubmit = (data: any) => {
+    const onSubmit = async (data: any) => {
         console.log(data);
+        const { firstname, lastname, email, phone, city, seenWhere } = data;
+        try {
+            const document = await addDoc(collection(db, "Hitch"), {
+                firstname: firstname,
+                lastname: lastname,
+                email: email,
+                phone: phone,
+                city: city,
+                seenWhere: seenWhere,
+                user_Id: auth.currentUser?.uid
+            })
+            console.log(document.id)
+            router.push("/book")
+        } catch (error) {
+            console.log("Error in adding document :" + JSON.stringify(error));
+            alert("Error in adding details, please try again")
+            setError("root", { message: "Error in adding details, please try again" })
+        }
+
     }
 
     return (
@@ -69,7 +100,7 @@ const Onboarding = () => {
                                 </div>
                                 <div className='relative flex items-center h-full cursor-text w-full  rounded-xl mb-2'>
                                     <div className='flex-1 relative h-full'>
-                                        <Input required type='tel' placeholder="Phone" className='w-full h-[50px] text-base rounded-xl' disabled defaultValue='+18061234567' {...register("phone")} />
+                                        <Input required type='tel' placeholder="Phone" className='w-full h-[50px] text-base rounded-xl' disabled defaultValue={defaultPhone} {...register("phone")} />
                                     </div>
                                 </div>
                                 <div className=' flex items-center max-h-full cursor-text w-full  rounded-xl mb-2'>
@@ -87,7 +118,7 @@ const Onboarding = () => {
                                         <div className='border border-slate-200 px-4 rounded-xl h-[60px] py-2 text-[#6a6a6a]'>
                                             <label htmlFor="city" className='text-sm'>Home City</label>
                                             <select className='w-full  text-base text-[#6a6a6a]  mb-2  px-3 outline-none' id='city' {...register("city")} required>
-                                                <option selected>Austin</option>
+                                                <option defaultValue={"5bc7aed6e7179a4377fda58e"}>Austin</option>
                                                 {cityOptions.map((city) => {
                                                     return (<option value={city.value} key={city.key}>{city.name}</option>)
                                                 })}
@@ -119,7 +150,7 @@ const Onboarding = () => {
                                     </div>
                                 </div>
                                 <Button className=' px-[24px] rounded-[10px] py-[16px] w-full text-center text-lg font-medium mt-4' disabled={isSubmitting}>{isSubmitting ? "Loading..." : "Create your account"}</Button>
-                                {errors.root && (<div className='text-red-700'>errors.root.message</div>)}
+                                {errors.root && (<div className='text-red-700'>{errors.root.message}</div>)}
                             </div>
                         </div>
                     </div>
