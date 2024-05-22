@@ -48,9 +48,9 @@ const SignIn = () => {
         if (!window.recaptchaVerifier) {
             window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
                 size: 'invisible',
-                callback: (response: any) => {
-                    sendOtp();
-                },
+                // callback: (response: any) => {
+                //     sendOtp();
+                // },
                 'expired-callback': () => {
                     // Reset reCAPTCHA if it expires
                     window.recaptchaVerifier.render().then((widgetId: any) => {
