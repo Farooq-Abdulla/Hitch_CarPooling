@@ -62,25 +62,10 @@ export default function ConfirmationPage() {
                         width="300"
                         className="object-contain"
                     />
-                    <p className="text-base sm:text-4xl text-black mt-4 mb-2 dark:text-neutral-200 flex items-center">
-                        Ride Confirmed on {date} <CircleCheckBig className="mx-3 size-8" />
+                    <p className="text-base sm:text-4xl text-black mt-4 mb-10 dark:text-neutral-200 flex items-center">
+                        Ride Confirmed  <CircleCheckBig className="mx-3 size-8" />
                     </p>
-                    <p className="text-xl mb-3 text-neutral-600 dark:text-neutral-400">
-                        A confirmation mail has been sent to {userDetails.email}
-                    </p>
-                    <p className="text-xl mb-3 text-neutral-600 dark:text-neutral-400">
-                        PickUp Details:  {pickUp} on {date} {travelDetails.STime}
-                    </p>
-                    <p className="text-xl mb-3 text-neutral-600 dark:text-neutral-400">
-                        DropOff Details:  {dropOff} on {date} {travelDetails.STimeArrival}
-                    </p>
-                    <p className="text-xl mb-3 text-neutral-600 dark:text-neutral-400">
-                        Price: ${travelDetails.Price}
-                    </p>
-                    <p className="text-xl mb-3 text-neutral-600 dark:text-neutral-400">
-                        Car Name: {travelDetails.CarName}
-                    </p>
-
+                    /
 
 
                     <button className="rounded-full pl-4 pr-1 py-1 text-white flex items-center space-x-1 bg-black mt-4 text-lg font-bold dark:bg-zinc-800" onClick={() => router.push("/")}>
