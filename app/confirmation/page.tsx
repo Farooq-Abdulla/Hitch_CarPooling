@@ -65,7 +65,7 @@ export default function ConfirmationPage() {
                     <p className="text-base sm:text-4xl text-black mt-4 mb-10 dark:text-neutral-200 flex items-center">
                         Ride Confirmed  <CircleCheckBig className="mx-3 size-8" />
                     </p>
-                    /
+
 
 
                     <button className="rounded-full pl-4 pr-1 py-1 text-white flex items-center space-x-1 bg-black mt-4 text-lg font-bold dark:bg-zinc-800" onClick={() => router.push("/")}>
