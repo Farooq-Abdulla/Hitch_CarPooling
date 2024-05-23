@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button'
 import { InputOTPDemo } from '@/components/ui/InputOTP'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 import NavBar from '@/components/ui/NavBar'
-import { Otp, phoneState } from '@/lib/RecoilContextProvider'
+import { authUserReciol, Otp, phoneState } from '@/lib/RecoilContextProvider'
 import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -23,6 +23,8 @@ declare global {
 
 const SignIn = () => {
     const [authUser] = useAuthState(auth)
+    const [AuthUser, setAuthUser] = useRecoilState(authUserReciol)
+
     // console.log(authUser)
 
     const [phone, setPhone] = useRecoilState(phoneState)
@@ -93,7 +95,10 @@ const SignIn = () => {
             const data = await user.confirm(otp)
             console.log(data)
             // console.log(data.user.metadata.createdAt, data.user.metadata.lastLoginAt)
-            console.log(data._tokenResponse.isNewUser)
+            // console.log(data._tokenResponse.isNewUser)
+            localStorage.setItem("uid", data.user.uid)
+            setAuthUser(data.user.uid)
+
             setOTP('')
             if (data._tokenResponse.isNewUser) {
                 console.log(" In if block")

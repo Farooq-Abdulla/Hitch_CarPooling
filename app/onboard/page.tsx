@@ -4,12 +4,12 @@ import { Input } from "@/components/ui/input";
 import NavBar from '@/components/ui/NavBar';
 import cityOptions from '@/components/ui/SelectCity';
 import Seen from '@/components/ui/SelectHear';
-import { phoneState } from '@/lib/RecoilContextProvider';
+import { DocumentId, phoneState } from '@/lib/RecoilContextProvider';
 import { addDoc, collection } from "firebase/firestore";
 import { useRouter } from 'next/navigation';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useForm } from "react-hook-form";
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { z } from "zod";
 import { auth, db } from '../firebase/config';
 
@@ -43,10 +43,13 @@ cityOptions.sort((a, b) => {
 
 const Onboarding = () => {
     const router = useRouter()
+
     const [authUser] = useAuthState(auth)
-    if (!authUser) {
+    if (!localStorage.getItem("uid")) {
         router.push("/signin")
     }
+    const [docId, setDocId] = useRecoilState(DocumentId)
+    console.log("Trying to get DocId from main function", docId)
     const defaultPhone = useRecoilValue(phoneState);
     const { register, handleSubmit, setError, formState: { errors, isSubmitting } } = useForm<FormFields>({ defaultValues: { phone: defaultPhone } });
 
@@ -61,9 +64,10 @@ const Onboarding = () => {
                 phone: phone,
                 city: city,
                 seenWhere: seenWhere,
-                user_Id: auth.currentUser?.uid
+                user_Id: authUser?.uid
             })
-            console.log(document.id)
+            console.log("In try block of onSubmit function :", document.id)
+            setDocId(document.id)
             router.push("/book")
         } catch (error) {
             console.log("Error in adding document :" + JSON.stringify(error));

@@ -5,9 +5,11 @@ import { MapCompForBooking } from '@/components/ui/MapCompForBooking';
 import NavBar from '@/components/ui/NavBar';
 import PlaceSearchOrigin from '@/components/ui/OriginPlaceApi';
 import TravelInfoBlock from '@/components/ui/TravelInfoBlock';
+import { authUserReciol } from '@/lib/RecoilContextProvider';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { useRecoilState } from 'recoil';
 import { auth } from '../firebase/config';
 
 
@@ -18,6 +20,7 @@ const Bookpage = () => {
     const router = useRouter()
     const [showTravelInfo, setShowTravelInfo] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [AuthUser, setAuthUser] = useRecoilState(authUserReciol)
 
     const handleStartSearch = () => {
         setLoading(true);
@@ -28,11 +31,18 @@ const Bookpage = () => {
     //     return
     // }
 
+
     useEffect(() => {
-        if (!authUser) {
+        if (!localStorage.getItem("uid")) {
             router.push("/signin");
+        } else {
+            // setAuthUser(authUser!.uid)
+            console.log(AuthUser)
+            // console.log("Book Page : " + authUser!.uid)
         }
-    }, [authUser, router]);
+    }, [])
+
+
 
 
     return (

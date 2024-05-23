@@ -40,7 +40,7 @@ const BgVideoBox = () => {
 
     function handleClick(e: any) {
         e.preventDefault()
-        if (!authUser) {
+        if (!localStorage.getItem("uid")) {
             router.push('/signin')
         } else {
             router.push('/book')

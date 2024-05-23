@@ -1,3 +1,4 @@
+
 import Footer from "@/components/ui/Footer"
 import NavBar from "@/components/ui/NavBar"
 import QuestionsPage from "@/components/ui/QuestionsPage"
@@ -5,6 +6,7 @@ import RideRatesInfo from "@/components/ui/RideRatesInfo"
 import Link from "next/link"
 
 const Ridepage = () => {
+
     return (
         <div>
             <NavBar />

@@ -101,6 +101,30 @@ export const phoneState = atom({
     default: '',
 })
 
+export const DocumentId = atom({
+    key: 'DocumentId',
+    default: '',
+})
+
+export const UserDetails = atom({
+    key: 'UserDetails',
+    default: {
+        firstname: '',
+        lastname: '',
+        email: '',
+        phone: '',
+        city: '',
+        seenWhere: '',
+        user_Id: ''
+
+    }
+})
+
+export const authUserReciol = atom({
+    key: 'authUserReciol',
+    default: '',
+})
+
 
 
 const RecoilContextProvider = ({ children }: { children: React.ReactNode }) => {

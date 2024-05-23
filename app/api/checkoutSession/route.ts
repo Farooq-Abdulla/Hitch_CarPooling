@@ -46,8 +46,8 @@ export async function POST(req:NextRequest){
     
             ],
             mode: "payment",
-            success_url: "https://hitch-car-pooling.vercel.app/",
-            cancel_url: "https://hitch-car-pooling.vercel.app",
+            success_url: "https://hitch-car-pooling.vercel.app/confirmation",
+            cancel_url: "https://hitch-car-pooling.vercel.app/reject",
     
         })
         return NextResponse.json(checkoutSession.url,{status: 200})
