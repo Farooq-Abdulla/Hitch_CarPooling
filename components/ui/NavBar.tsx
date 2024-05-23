@@ -37,7 +37,7 @@ const NavBar = () => {
                 <NavLink href={"/download"}>Download</NavLink>
                 <NavLink href={"/x"}>Help</NavLink>
                 <NavLink href={"/book"}>Book Now</NavLink>
-                {res ? <span className="cursor-pointer px-[8px] py-[10px] my-[4px] mx-3 hover:bg-gray-600 hover:rounded-md" onClick={() => { localStorage.removeItem("uid"), signOut(auth), window.location.reload() }}>SignOut</span> : null}
+                {res ? <span className="cursor-pointer px-[8px] py-[10px] my-[4px] mx-3 hover:bg-gray-600 hover:rounded-md" onClick={() => { localStorage.removeItem("uid"), localStorage.removeItem("phone"), signOut(auth), window.location.reload() }}>SignOut</span> : null}
                 {/* <ServerNavBarSignOut /> */}
                 {/* <AuthUser>SignOut</AuthUser> */}
                 {/* <span className='px-[8px] py-[10px] my-[4px] mx-3 hover:bg-gray-600 hover:rounded-md cursor-pointer' >SignOut</span> */}

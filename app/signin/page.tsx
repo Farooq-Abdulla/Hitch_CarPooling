@@ -73,6 +73,7 @@ const SignIn = () => {
     const sendOtp = async () => {
         try {
             setLoading(true)
+            localStorage.setItem("phone", phone)
             initializeRecaptcha()
             const appVerifier = window.recaptchaVerifier;
             signInWithPhoneNumber(auth, phone, appVerifier)
