@@ -7,6 +7,7 @@ import Seen from '@/components/ui/SelectHear';
 import { DocumentId, phoneState } from '@/lib/RecoilContextProvider';
 import { addDoc, collection } from "firebase/firestore";
 import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useForm } from "react-hook-form";
 import { useRecoilState, useRecoilValue } from 'recoil';
@@ -45,9 +46,11 @@ const Onboarding = () => {
     const router = useRouter()
 
     const [authUser] = useAuthState(auth)
-    if (!localStorage.getItem("uid")) {
-        router.push("/signin")
-    }
+    useEffect(() => {
+        if (!localStorage.getItem("uid")) {
+            router.push("/signin")
+        }
+    })
     const [docId, setDocId] = useRecoilState(DocumentId)
     console.log("Trying to get DocId from main function", docId)
     const defaultPhone = useRecoilValue(phoneState);
