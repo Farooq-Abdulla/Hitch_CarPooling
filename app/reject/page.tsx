@@ -20,7 +20,7 @@ const Cancel = () => {
                         <CardDescription>Card Description</CardDescription>
                     </CardHeader> */}
                     <CardContent>
-                        <p className='text-xl text-red-700 my-5'>Payment didn't go through. Try again from beginning</p>
+                        <p className='text-xl text-red-700 my-5'>Payment didn&apos;t go through. Try again from beginning</p>
                     </CardContent>
                     <CardFooter className="flex justify-center">
                         <button className="rounded-full pl-4 pr-1 py-1 text-white flex items-center space-x-1 bg-black mt-4 text-lg font-bold dark:bg-zinc-800" onClick={() => router.push("/book")}>
